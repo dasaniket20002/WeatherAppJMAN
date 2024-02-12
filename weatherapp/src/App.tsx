@@ -1,10 +1,14 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { RegisterPage } from "./components/RegisterPage";
-import HomePage from "./components/HomePage";
+import React, { useState } from 'react';
+import { InputText } from 'primereact/inputtext';
+
+const api = {
+    key: "195887370f9dafce79b410c97c2925f5",
+    base: "https://api.openweathermap.org/data/2.5/",
+}
 
 function App() {
   return (
-    <div className="App min-h-screen bg-gradient">
+    <div className="App min-h-screen">
         <BrowserRouter>
             <Routes>
                 <Route path="/register" element={<RegisterPage />} />
