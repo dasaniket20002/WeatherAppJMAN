@@ -4,7 +4,7 @@ import HomePage from "./components/HomePage";
 
 function App() {
   return (
-    <div className="App min-h-screen">
+    <div className="App min-h-screen bg-gradient">
         <BrowserRouter>
             <Routes>
                 <Route path="/register" element={<RegisterPage />} />
