@@ -24,7 +24,7 @@ function App() {
                                 <Route index path="/" element={<HomePage />} />
                                 <Route path="register" element={<RegisterPage />} />
                             </Route>
-                            <Route path='/weather' element={<WeatherDisplay />} />
+                            <Route path='weather' element={<WeatherDisplay />} />
                         </Routes>
                     </BrowserRouter>
                 </div>
