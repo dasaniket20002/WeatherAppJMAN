@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 
+import { Container, Segment } from "semantic-ui-react";
+import { useSpeechSynthesis } from "react-speech-kit";
+
+
 const api = {
     key: "195887370f9dafce79b410c97c2925f5",
     base: "https://api.openweathermap.org/data/2.5/",
@@ -26,6 +30,16 @@ function App() {
                 setWeather(result);
             });
     };
+
+    const [text, setText] = useState('');
+    const { speak } = useSpeechSynthesis();
+
+    const handleOnClick = () => {
+        
+        speak({ text: weather.name });
+        speak({ text: weather.main.temp });
+        speak({ text: weather.weather[0].description });
+    }
 
 
     return (
@@ -107,7 +121,16 @@ function App() {
             ) : (
                 ""
             )}
+
+
+            <Container>
+                <Segment>
+                    <button className="buttonStyle" onClick={() => { handleOnClick() }}>Listen Voiceover</button>
+                </Segment>
+            </Container>
         </div>
+
+
     );
 }
 
