@@ -13,7 +13,8 @@ const LandingPage = () => {
                     <li>Weather</li>
                     <li><i className='pi pi-cloud' /></li>
                 </ul>
-                <ul className='md:flex gap-4 justify-self-end'>
+                <ul className='flex flex-col md:flex-row gap-4 justify-self-end'>
+                    <li><Link to={'#'}>Log&nbsp;out</Link></li>
                     <li><Link to={'#'}>Contact</Link></li>
                 </ul>
             </nav>
