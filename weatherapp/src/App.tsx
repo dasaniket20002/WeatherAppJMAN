@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
 import 'primeicons/primeicons.css';
-import LandingPage from './components/LandingPage';
+import RoutesContainer from './components/RoutesContainer';
 import WeatherDisplay from './components/WeatherDisplay';
 
 function App() {
@@ -20,10 +20,10 @@ function App() {
                 <div className='relative w-full auto-rows-min rounded bg-card-transp-white backdrop-blur-md shadow-lg'>
                     <BrowserRouter>
                         <Routes>
-                            <Route path='/' element={<LandingPage />}>
+                            <Route path='/' element={<RoutesContainer />}>
                                 <Route index path="/" element={<HomePage />} />
                                 <Route path="register" element={<RegisterPage />} />
-                                <Route path='weather' element={<WeatherDisplay  />} />
+                                <Route path='weather' element={<WeatherDisplay />} />
                             </Route>
                         </Routes>
                     </BrowserRouter>
