@@ -22,7 +22,7 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className="col-start-1 row-span-full col-span-full flex flex-col items-center justify-center w-full md:w-1/2 px-6 m-auto gap-2">
+        <div className="col-start-1 row-span-full col-span-full flex flex-col items-center justify-center w-full md:w-1/2 py-32 px-6 m-auto gap-2">
             {isLogin ?
                 <>
                     <h1 className="text-5xl leading-[1.25] font-semibold self-center text-center text-primary-col drop-shadow-md">Register</h1>

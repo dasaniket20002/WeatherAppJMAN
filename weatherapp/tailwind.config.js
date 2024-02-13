@@ -10,7 +10,7 @@ module.exports = {
                 'primary-col': '#0066FF',
                 'primary-col-transp': '#0066FF55',
                 'accent-col': '#00C2FF',
-                'accent-col-transp': '#00C2FF55',
+                'accent-col-transp': '#00C2FF12',
                 'fade-col': '#C6D3E3'
             },
             backgroundImage: {
