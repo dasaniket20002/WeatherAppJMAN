@@ -1,5 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@emotion/react": [
+        "node_modules/@emotion/react/types/index.d.ts"
+      ],
+      "@emotion/styled": [
+        "node_modules/@emotion/styled/types/index.d.ts"
+      ]
+    },
     "target": "es5",
     "lib": [
       "dom",

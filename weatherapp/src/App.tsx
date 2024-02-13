@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { InputText } from 'primereact/inputtext';
 
 import { Container, Segment } from "semantic-ui-react";
 import { useSpeechSynthesis } from "react-speech-kit";
