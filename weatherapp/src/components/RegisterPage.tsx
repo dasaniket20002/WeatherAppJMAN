@@ -1,5 +1,8 @@
 import { useState } from "react";
 import InputField from "./InputField";
+import { registerButton } from "../ts/ButtonHandle";
+import { loginButton } from "../ts/ButtonHandle";
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
     const [isLogin, setLogin] = useState<boolean>(false);
@@ -11,6 +14,8 @@ const RegisterPage = () => {
     const [loginPasswordValue, setLoginPasswordValue] = useState<string>('');
 
     const [countryValue, setCountryValue] = useState<string>('');
+
+    const navigate = useNavigate(); // Move useNavigate outside of the component body
 
     const toggleIsLogin = () => { setLogin(!isLogin); }
     const clearInputFields = () => {
@@ -56,7 +61,14 @@ const RegisterPage = () => {
                             setterFunction={setCountryValue}
                         />
                         <section className='flex items-center self-end px-4 mt-2 gap-4'>
-                            <button type="submit" className='w-min border-[1px] border-primary-col text-primary-col bg-card-transp-white rounded py-2 px-4 transition hover:scale-110 shadow-md hover:shadow-primary-col-transp'>Register</button>
+                            <button type="submit" 
+                                    className='w-min border-[1px] border-primary-col text-primary-col bg-card-transp-white rounded py-2 px-4 transition hover:scale-110 shadow-md hover:shadow-primary-col-transp'
+                                    onClick={() => {
+                                        registerButton(nameValue, emailValue, regPasswordValue, countryValue)
+                                        clearInputFields();
+                                    }}>
+                                Register
+                            </button>
                             <p className="text-sm"> or </p>
                             <button className='text-accent-col font-light underline transition hover:scale-110' onClick={() => {
                                 toggleIsLogin();
@@ -84,7 +96,15 @@ const RegisterPage = () => {
                             setterFunction={setLoginPasswordValue}
                         />
                         <section className='flex items-center self-end px-4 mt-2 gap-4'>
-                            <button type="submit" className='w-min border-[1px] border-primary-col text-primary-col bg-card-transp-white rounded py-2 px-4 transition hover:scale-110 shadow-md hover:shadow-primary-col-transp'>Login</button>
+                            <button type="submit" 
+                                    className='w-min border-[1px] border-primary-col text-primary-col bg-card-transp-white rounded py-2 px-4 transition hover:scale-110 shadow-md hover:shadow-primary-col-transp'
+                                    onClick={() => {
+                                        loginButton(emailValue, loginPasswordValue)
+                                        clearInputFields();
+                                        navigate('/weather'); // Use navigate here
+                                    }}>
+                                Login
+                            </button>
                             <p> or </p>
                             <button className='text-accent-col font-light underline transition hover:scale-110' onClick={() => {
                                 toggleIsLogin();
@@ -98,4 +118,4 @@ const RegisterPage = () => {
     );
 }
 
-export default RegisterPage
+export default RegisterPage;
