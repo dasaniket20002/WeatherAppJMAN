@@ -65,10 +65,11 @@ const WeatherDisplay = () => {
                                 <h2 className='text-sm p-1'>Speed</h2>
                                 <p className='font-semibold text-lg'>{weatherData?.wind.speed}&nbsp;kt</p>
                             </span>
-                            <span className='w-[7rem] p-1 lg:p-4 bg-accent-col-transp rounded shadow-md hover:shadow-lg'>
+                            { weatherData?.wind.gust ? <span className='w-[7rem] p-1 lg:p-4 bg-accent-col-transp rounded shadow-md hover:shadow-lg'>
                                 <h2 className='text-sm p-1'>Gust</h2>
                                 <p className='font-semibold text-lg'>{weatherData?.wind.gust}&nbsp;kt</p>
-                            </span>
+                            </span> : <></>}
+
                         </section>
                     </div>
 
