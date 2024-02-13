@@ -9,6 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    {/* <Markerr /> */}
     <Maps />
     {/* <App2 /> */}
   </React.StrictMode>

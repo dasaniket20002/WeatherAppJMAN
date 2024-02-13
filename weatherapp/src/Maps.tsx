@@ -80,7 +80,17 @@ function Maps() {
         style={{ width: "500px", height: "500px", transitionDuration: "200" }}
         mapStyle="mapbox://styles/g3-dv/clsk02c3n01y601pe174pgr9p"
       // onDblClick={handleClick}
-      ></ReactMapGl>
+      >
+        
+        {newPlace && (
+          <Marker
+            latitude={newPlace.lat}
+            longitude={newPlace.long}
+          >
+            <Room style={{ fontSize: 100, color: 'red' }} />
+          </Marker>
+        )}
+      </ReactMapGl>
 
 
       <div>
