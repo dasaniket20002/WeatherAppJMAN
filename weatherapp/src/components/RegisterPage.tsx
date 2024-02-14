@@ -1,9 +1,10 @@
 import { useState } from "react";
 import InputField from "./InputField";
 import { loginButton, registerButton } from "../ts/BackendAPI";
-import { Navigate } from "react-router";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router";
 
 const RegisterPage = () => {
     const [isLogin, setLogin] = useState<boolean>(false);
@@ -14,7 +15,7 @@ const RegisterPage = () => {
     const [regPasswordValue, setRegPasswordValue] = useState<string>('');
     const [loginPasswordValue, setLoginPasswordValue] = useState<string>('');
 
-    const [stateValue, setStateValue] = useState<string>('');
+    const [cityValue, setCityValue] = useState<string>('');
 
     const toggleIsLogin = () => { setLogin(!isLogin); }
     const clearInputFields = () => {
@@ -22,12 +23,15 @@ const RegisterPage = () => {
         setEmailValue('');
         setRegPasswordValue('');
         setLoginPasswordValue('');
-        setStateValue('');
+        setCityValue('');
     }
+
+    const navigate = useNavigate();
 
     const notify = () => {
         toast('Toast', {
-            className: ' bg-transparent'
+            className: ' bg-transparent',
+            
         });
     }
 
@@ -59,21 +63,24 @@ const RegisterPage = () => {
                     />
                     <InputField
                         fieldType={"text"}
-                        fieldID={"state"}
-                        fieldName={"State"}
-                        value={stateValue}
-                        setterFunction={setStateValue}
+                        fieldID={"city"}
+                        fieldName={"City"}
+                        value={cityValue}
+                        setterFunction={setCityValue}
                     />
                     <section className='flex items-center self-end px-4 mt-2 gap-4'>
                         <button
                             type="submit"
                             className='w-min border-[1px] border-primary-col text-primary-col bg-card-transp-white rounded py-2 px-4 transition hover:scale-110 shadow-md hover:shadow-primary-col-transp'
                             onClick={async () => {
-                                if (await registerButton(nameValue, emailValue, regPasswordValue, stateValue)) {
+                                
+                                if(await registerButton(nameValue, emailValue, regPasswordValue, cityValue)) {
                                     clearInputFields();
                                     toggleIsLogin();
+                                    toast.success('Resistered');
+                                } else {
+                                    toast.error('Register Failed');
                                 }
-                                notify();
                             }}>
                             Register
                         </button>
@@ -108,7 +115,7 @@ const RegisterPage = () => {
                             onClick={async () => {
                                 if (await loginButton(emailValue, loginPasswordValue)) {
                                     clearInputFields();
-                                    <Navigate to={'/weather'} />
+                                    navigate('/weather');
                                 }
                                 notify();
                             }}>
@@ -122,11 +129,7 @@ const RegisterPage = () => {
                     </section>
                 </>
             }
-            <ToastContainer
-                className={'overflow-hidden'}
-                toastClassName={''}
-                bodyClassName={''}
-                progressClassName={''} />
+            <ToastContainer />
         </div >
     );
 }
