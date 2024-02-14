@@ -4,6 +4,7 @@ import { getWeatherData } from '../ts/WeatherAPI';
 import { unixTo24hr } from '../ts/Utilities';
 import { useLocation } from 'react-router';
 import InputField from './InputField';
+import Maps from './Maps';
 
 const WeatherDisplay = () => {
     const { state } = useLocation();
@@ -59,7 +60,7 @@ const WeatherDisplay = () => {
                 <div className='col-start-1 row-start-2 col-span-full md:col-span-2 p-4 backdrop-blur-md shadow-lg grid auto-rows-max w-full self-center'>
                     <h1 className='text-md font-semibold text-primary-col text-center pb-4'>Weather</h1>
                     <section className='py-4 justify-self-center'>
-                        <span className='flex gap-6 items-center'>
+                        <span className='flex flex-col md:flex-row gap-6 items-center'>
                             <p className='bg-primary-col text-white text-xs flex items-center text-center p-2 rounded'>{`>${weatherData?.main.temp_max}°C`}<br />{`<${weatherData?.main.temp_min}°C`}</p>
                             <h1 className='font-bold text-3xl text-primary-col'>{weatherData?.main.temp}°C</h1>
                             <p className='bg-primary-col text-white text-xs flex items-center text-center p-2 rounded'>Feels&nbsp;Like:<br />{weatherData?.main.feels_like}°C</p>
@@ -116,6 +117,10 @@ const WeatherDisplay = () => {
                         </span>
                     </div>
                     
+                </div>
+
+                <div className='col-span-full p-8 backdrop-blur-md shadow-lg rounded'>
+                    <Maps latitude={weatherData?.coord.lat ? weatherData?.coord.lat : 0} longitude={weatherData?.coord.lon ? weatherData?.coord.lon : 0}/>
                 </div>
             </div>
         </>
