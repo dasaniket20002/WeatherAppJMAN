@@ -28,13 +28,6 @@ const RegisterPage = () => {
 
     const navigate = useNavigate();
 
-    const notify = () => {
-        toast('Toast', {
-            className: ' bg-transparent',
-            
-        });
-    }
-
     return (
         <div className="col-start-1 row-span-full col-span-full flex flex-col items-center justify-center w-full md:w-1/2 py-32 px-6 m-auto gap-5 md:gap-9">
             {isLogin ?
@@ -73,14 +66,18 @@ const RegisterPage = () => {
                             type="submit"
                             className='w-min border-[1px] border-primary-col text-primary-col bg-card-transp-white rounded py-2 px-4 transition hover:scale-110 shadow-md hover:shadow-primary-col-transp'
                             onClick={async () => {
-                                
-                                if(await registerButton(nameValue, emailValue, regPasswordValue, cityValue)) {
-                                    clearInputFields();
-                                    toggleIsLogin();
-                                    toast.success('Resistered');
-                                } else {
-                                    toast.error('Register Failed');
-                                }
+
+                                registerButton(nameValue, emailValue, regPasswordValue, cityValue)
+                                    .then((res) => {
+                                        console.log(res);
+                                        if(res) {
+                                            clearInputFields();
+                                            toggleIsLogin();
+                                            toast.success('Resistered');
+                                        } else {
+                                            toast.error('Not registered');
+                                        }
+                                    })
                             }}>
                             Register
                         </button>
@@ -113,11 +110,19 @@ const RegisterPage = () => {
                             type="submit"
                             className='w-min border-[1px] border-primary-col text-primary-col bg-card-transp-white rounded py-2 px-4 transition hover:scale-110 shadow-md hover:shadow-primary-col-transp'
                             onClick={async () => {
-                                if (await loginButton(emailValue, loginPasswordValue)) {
-                                    clearInputFields();
-                                    navigate('/weather');
-                                }
-                                notify();
+                                loginButton(emailValue, loginPasswordValue)
+                                    .then((res) => {
+                                        console.log(res);
+                                        if(res) {
+                                            clearInputFields();
+                                            navigate('/weather', {
+                                                state: res
+                                            });
+                                            toast.success('Login Successful');
+                                        } else {
+                                            toast.error('Login Failed');
+                                        }
+                                    })
                             }}>
                             Login
                         </button>

@@ -2,29 +2,58 @@ import React, { useEffect, useState } from 'react'
 import { APIKeyBasePair, WeatherData } from '../ts/Interfaces';
 import { getWeatherData } from '../ts/WeatherAPI';
 import { unixTo24hr } from '../ts/Utilities';
+import { useLocation } from 'react-router';
+import InputField from './InputField';
 
 const WeatherDisplay = () => {
-    const location: string = 'chennai'; // TODO: fetch from db
+    const { state } = useLocation();
 
+    const [location, setLocation] = useState<string>(state ? state.city : 'chennai');
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+    const [isEditingLocation, setEditingLocation] = useState<boolean>(false);
+    const [locationEdit, setLocationEdit] = useState<string>(location);
 
-    useEffect(() => {
+    const getWeatherDataFromAPI = async (location: string): Promise<boolean> => {
         const api: APIKeyBasePair = {
             key: "195887370f9dafce79b410c97c2925f5",
             base: "https://api.openweathermap.org/data/2.5/",
         } as APIKeyBasePair;
-        getWeatherData(api, location).then((res) => { setWeatherData(res as WeatherData) })
-    }, []);
-
+        const res = await getWeatherData(api, location)
+        if(!res) return false;
+        setWeatherData(res as WeatherData);
+        return true;
+    }
     useEffect(() => {
-        console.log(weatherData);
-    }, [weatherData]);
+        getWeatherDataFromAPI(location);
+    }, [location]);
+    
+    const onPlusButtonClicked = async () =>  {
+        setEditingLocation(!isEditingLocation);
+        if(await getWeatherDataFromAPI(locationEdit)) {
+            setLocation(locationEdit);
+        }
+    }
 
     return (
         <>
             <div className='col-span-full row-span-full row-start-2 grid grid-cols-4 px-12 pt-4 pb-12 gap-4'>
-                <div className='col-span-full row-start-1 w-full flex justify-center items-center gap-4 text-primary-col p-4 backdrop-blur-md shadow-lg'>
-                    <h1 className='text-base font-normal flex items-center'><i className='pi pi-map-marker' />&nbsp;Location:</h1><h1 className='text-2xl font-medium'>{weatherData?.name}&nbsp;({weatherData?.sys.country})</h1>
+                <div className='col-span-full row-start-1 w-full flex flex-col md:grid md:grid-cols-3 gap-4 text-primary-col p-4 backdrop-blur-md shadow-lg'>
+                    <span className='col-start-2 row-start-1 self-center flex items-center gap-2'>
+                        <h1 className='text-base font-normal flex items-center '><i className='pi pi-map-marker' />&nbsp;Location:</h1>
+                        {
+                            isEditingLocation ? 
+                            <InputField 
+                                fieldID='locInput'
+                                fieldName='Location'
+                                fieldType='string'
+                                value={locationEdit}
+                                setterFunction={setLocationEdit}
+                            />
+                            :
+                            <h1 className='text-2xl font-medium'>{weatherData?.name}&nbsp;({weatherData?.sys.country})</h1>
+                        }
+                    </span>
+                    <i className='pi pi-plus-circle row-start-1 col-start-3 text-2xl justify-self-end self-center' onClick={() => { onPlusButtonClicked() }} />
                 </div>
 
                 <div className='col-start-1 row-start-2 col-span-full md:col-span-2 p-4 backdrop-blur-md shadow-lg grid auto-rows-max w-full self-center'>
@@ -86,7 +115,7 @@ const WeatherDisplay = () => {
                             <p className='font-semibold text-lg'>{weatherData?.sys.sunset ? unixTo24hr(weatherData?.sys.sunset + weatherData?.timezone) : ''}</p>
                         </span>
                     </div>
-
+                    
                 </div>
             </div>
         </>

@@ -47,3 +47,9 @@ export interface APIKeyBasePair {
     key: string;
     base: string;
 }
+
+export interface UserDataWithoutPassword {
+    name: string;
+    email: string;
+    city: string;
+}
