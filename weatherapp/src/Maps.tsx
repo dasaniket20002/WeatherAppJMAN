@@ -71,6 +71,10 @@ function Maps() {
     });
   }
 
+
+  const markerLatitude = parseFloat(weather.coord?.lat || '0');
+  const markerLongitude = parseFloat(weather.coord?.lon || '0');
+  
   return (
     <div style={{ width: "100vw", height: "100vh", zIndex: 999 }}>
 
@@ -82,12 +86,10 @@ function Maps() {
       // onDblClick={handleClick}
       >
         
-        {newPlace && (
-          <Marker
-            latitude={newPlace.lat}
-            longitude={newPlace.long}
-          >
-            <Room style={{ fontSize: 100, color: 'red' }} />
+        {markerLatitude !== 0 && markerLongitude !== 0 && (
+          <Marker latitude={markerLatitude} longitude={markerLongitude}>
+            <Room style={{ fontSize: 50, color: 'red', left: '-200px', top: '-50px' }} />
+            {/* <div style={{ color: 'red', fontSize: '24px' }}>📍</div> */}
           </Marker>
         )}
       </ReactMapGl>
