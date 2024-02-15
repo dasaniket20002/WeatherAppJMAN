@@ -10,7 +10,7 @@ function App() {
         <div className="App bg-gradient">
             <div className='min-h-screen p-14'>
 
-                <div className='w-screen h-screen fixed top-0 left-0 overflow-hidden'>
+                <div className='w-screen h-screen fixed top-0 left-0 overflow-hidden pointer-events-none'>
                     <h1 className='absolute top-5 right-0 font-bold text-[15rem] text-fade-col'>Sunny?</h1>
                     <h1 className='absolute -top-5 -left-5 font-bold text-[10rem] text-fade-col'>Winds!</h1>
                     <h1 className='absolute rotate-90 top-0 left-[32rem] right-50 font-bold text-[10rem] text-fade-col'>Breeze</h1>
