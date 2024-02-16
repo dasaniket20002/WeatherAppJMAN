@@ -6,10 +6,16 @@ import { useLocation } from "react-router";
 import InputField from "./InputField";
 import Maps from "./Maps";
 import { useSpeechSynthesis } from "react-speech-kit";
+import { useNavigate } from "react-router-dom";
 
 const WeatherDisplay = () => {
   const { state } = useLocation();
   const { speak } = useSpeechSynthesis();
+  const nav = useNavigate();
+
+  if (!state) {
+    nav('/register');
+  }
 
   const [location, setLocation] = useState<string>(
     state ? state.city : "chennai"
@@ -33,27 +39,40 @@ const WeatherDisplay = () => {
 
   const onPlusButtonClicked = async () => {
     setEditingLocation(!isEditingLocation);
-    getWeatherDataFromAPI(location)
   };
 
-  const onSpeakButtonClicked =  async () => {
-    const data = ['weather' , 
-                "temperature, " + Math.round(weatherData?.main.temp as number) + " degree celsius", 
-                'Pressure, ' + Math.round(weatherData?.main.pressure as number) + " milli bar", 
-                'Humidity, ' + Math.round(weatherData?.main.humidity as number) + " percent", 
-                'visibility, '+ Math.round(weatherData?.visibility as number) + " kilometers", 
-                'Wind', 
-                Math.round(weatherData?.wind.deg as number) + " degrees", 
-                "speed, " + Math.round(weatherData?.wind.speed as number) + " knots" ];
+  const onSpeakButtonClicked = async () => {
+    const data = [
+      "weather",
+      "temperature, " +
+        Math.round(weatherData?.main.temp as number) +
+        " degree celsius",
+      "Pressure, " +
+        Math.round(weatherData?.main.pressure as number) +
+        " milli bar",
+      "Humidity, " +
+        Math.round(weatherData?.main.humidity as number) +
+        " percent",
+      "visibility, " +
+        Math.round(weatherData?.visibility as number) +
+        " kilometers",
+      "Wind",
+      Math.round(weatherData?.wind.deg as number) + " degrees",
+      "speed, " + Math.round(weatherData?.wind.speed as number) + " knots",
+    ];
     data.forEach((item) => {
-        speak({ text: item });
+      speak({ text: item });
     });
-  }
+  };
 
   return (
     <>
       <div className="col-span-full row-span-full row-start-2 grid grid-cols-4 px-12 pt-4 pb-12 gap-4">
-        <div className="col-span-full row-start-1 w-full flex flex-col md:grid md:grid-cols-3 gap-4 text-primary-col p-4 backdrop-blur-md shadow-lg">
+        <p className="row-start-1 col-span-full text-primary-col text-center text-xs ">
+          Hi&nbsp;
+          <span className="font-medium">{state ? state.name : "Guest"}</span>!
+        </p>
+        <div className="col-span-full row-start-2 w-full flex flex-col md:grid md:grid-cols-3 gap-4 text-primary-col p-4 backdrop-blur-md shadow-lg">
           <span className="col-start-2 row-start-1 self-center flex items-center gap-2">
             <h1 className="text-base font-normal flex items-center ">
               <i className="pi pi-map-marker" />
@@ -89,7 +108,7 @@ const WeatherDisplay = () => {
           </span>
         </div>
 
-        <div className="col-start-1 row-start-2 col-span-full md:col-span-2 p-4 backdrop-blur-md shadow-lg grid auto-rows-max w-full self-center">
+        <div className="col-start-1 row-start-3 col-span-full md:col-span-2 p-4 backdrop-blur-md shadow-lg grid auto-rows-max w-full self-center">
           <h1 className="text-md font-semibold text-primary-col text-center pb-4">
             Weather
           </h1>
@@ -135,7 +154,7 @@ const WeatherDisplay = () => {
           </section>
         </div>
 
-        <div className="w-full md:col-start-3 md:row-start-2 col-span-full flex flex-col gap-4">
+        <div className="w-full md:col-start-3 md:row-start-3 col-span-full flex flex-col gap-4">
           <div className="p-4 backdrop-blur-md shadow-lg grid auto-rows-max">
             <h1 className="text-md font-semibold text-primary-col text-center pb-4">
               Wind

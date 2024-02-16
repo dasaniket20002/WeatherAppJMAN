@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const comments = require("./Comments")
 
 const UserSchema = new mongoose.Schema(
   {
@@ -14,18 +13,12 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      // min: 8,
-      // max: 15,
       required: true,
     },
     city: {
       type: String,
       required: true,
     },
-    // comments: {
-    //     type: [comments],
-    //     default: [],
-    // }
   },
   { timestamps: true }
 );

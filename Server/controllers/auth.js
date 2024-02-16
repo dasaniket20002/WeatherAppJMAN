@@ -5,12 +5,7 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,15}$/;
 
 const register = async (req, res) => {
   try {
-    const {
-      name,
-      email= email.toLowerCase(),
-      password,
-      city,
-    } = req.body;
+    const { name, email = email.toLowerCase(), password, city } = req.body;
 
     const user = await User.findOne({ email: email });
     if (user) return res.status(400).json({ msg: "User already exists!" });
@@ -26,18 +21,16 @@ const register = async (req, res) => {
       name,
       email,
       password: passwordHash,
-      city
+      city,
     });
 
     const savedUser = await newUser.save();
-    console.log("User Registered Successfully")
+    console.log("User Registered Successfully");
     res.status(200).json(savedUser);
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 const login = async (req, res) => {
   try {
@@ -52,7 +45,7 @@ const login = async (req, res) => {
     const userObject = user.toObject();
     delete userObject.password;
 
-    console.log("User logged in successfully")
+    console.log("User logged in successfully");
     res.status(200).json({ token, user: userObject });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -60,4 +53,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = {register, login};
+module.exports = { register, login };
