@@ -1,3 +1,4 @@
+// interface for weather data returned by the API
 export interface WeatherData {
     base: string;
     clouds: {
@@ -43,11 +44,13 @@ export interface WeatherData {
     }
 }
 
+// interface for API and base URL pair
 export interface APIKeyBasePair {
     key: string;
     base: string;
 }
 
+// interface for user data W/O password
 export interface UserDataWithoutPassword {
     name: string;
     email: string;

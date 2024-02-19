@@ -1,3 +1,4 @@
+// import neccesssary framworks and functions
 import { useState } from "react";
 import InputField from "./InputField";
 import { loginButton, registerButton } from "../ts/BackendAPI";
@@ -6,7 +7,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router";
 
+// component for the register page
 const RegisterPage = () => {
+
+    // state variables
+
     const [isLogin, setLogin] = useState<boolean>(false);
 
     const [nameValue, setNameValue] = useState<string>('');
@@ -17,6 +22,7 @@ const RegisterPage = () => {
 
     const [cityValue, setCityValue] = useState<string>('');
 
+    // function to toggle between login, register and to clear the input fields
     const toggleIsLogin = () => { setLogin(!isLogin); }
     const clearInputFields = () => {
         setNameValue('');
@@ -26,6 +32,7 @@ const RegisterPage = () => {
         setCityValue('');
     }
 
+    // navigation hook
     const navigate = useNavigate();
 
     return (

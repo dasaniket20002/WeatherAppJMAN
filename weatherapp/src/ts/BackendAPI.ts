@@ -1,6 +1,8 @@
+// import neccesssary framworks and functions
 import axios from 'axios';
 import { UserDataWithoutPassword } from './Interfaces';
 
+// function to handle registration request
 export const registerButton = async (name: string, email: string, password: string, city: string): Promise<boolean> => {
     const serverIP: string = 'http://localhost:5001/auth/register';
     const obj = {
@@ -22,6 +24,7 @@ export const registerButton = async (name: string, email: string, password: stri
     return false;
 }
 
+// function to handle login request
 export const loginButton = async (email: string, password: string): Promise<UserDataWithoutPassword | undefined> => {
     const serverIP: string = 'http://localhost:5001/auth/login';
     const obj = {
@@ -30,6 +33,8 @@ export const loginButton = async (email: string, password: string): Promise<User
     }
     try {
         const res = await axios.post(serverIP, obj);
+
+        // return successful status
         if (res.status === 200) {
             console.log('login successful', res.data);
             return res.data.user;

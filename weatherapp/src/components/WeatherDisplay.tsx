@@ -1,3 +1,4 @@
+// import neccessary frameworks and functions
 import React, { useEffect, useState } from "react";
 import { APIKeyBasePair, WeatherData } from "../ts/Interfaces";
 import { getWeatherData } from "../ts/WeatherAPI";
@@ -13,6 +14,7 @@ const WeatherDisplay = () => {
     const { speak } = useSpeechSynthesis();
     const nav = useNavigate();
 
+    // redirect to register page if state is not available
     if (!state) {
         nav('/register');
     }
@@ -23,6 +25,7 @@ const WeatherDisplay = () => {
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
     const [isEditingLocation, setEditingLocation] = useState<boolean>(false);
 
+    // fetch waether data from API when location changes
     const getWeatherDataFromAPI = async (location: string): Promise<boolean> => {
         const api: APIKeyBasePair = {
             key: "195887370f9dafce79b410c97c2925f5",
@@ -37,10 +40,12 @@ const WeatherDisplay = () => {
         getWeatherDataFromAPI(location);
     }, [location]);
 
+    // toggle editing location mode
     const onPlusButtonClicked = async () => {
         setEditingLocation(!isEditingLocation);
     };
 
+    // audio/speak weather information
     const onSpeakButtonClicked = async () => {
         const data = [
             "weather",
@@ -67,17 +72,24 @@ const WeatherDisplay = () => {
 
     return (
         <>
+            {/* main weather display section */}
             <div className="col-span-full row-span-full row-start-2 grid grid-cols-4 px-12 pt-4 pb-12 gap-4">
+                {/* greeting */}
                 <p className="row-start-1 col-span-full text-primary-col text-center text-xs ">
                     Hi&nbsp;
                     <span className="font-medium">{state ? state.name : "Guest"}</span>!
                 </p>
+
+                
+                {/* location display and controls */}
                 <div className="col-span-full row-start-2 w-full flex flex-col md:grid md:grid-cols-3 gap-4 place-items-center text-primary-col p-4 backdrop-blur-md shadow-lg">
                     <span className="col-start-2 row-start-1 self-center flex items-center gap-2">
                         <h1 className="text-base font-normal flex items-center ">
                             <i className="pi pi-map-marker" />
                             &nbsp;Location:
                         </h1>
+
+                        {/* conditionally render input field for editing location */}
                         {isEditingLocation ? (
                             <InputField
                                 fieldID="locInput"
@@ -92,6 +104,8 @@ const WeatherDisplay = () => {
                             </h1>
                         )}
                     </span>
+
+                    {/* buttons for editing location and speaking weather information */}
                     <span className="row-start-1 col-start-3 text-2xl justify-self-end self-center flex gap-4">
                         <i
                             className="pi pi-plus-circle cursor-pointer"
@@ -108,6 +122,8 @@ const WeatherDisplay = () => {
                     </span>
                 </div>
 
+                
+                {/* weather information display */}
                 <div className="col-start-1 row-start-3 col-span-full md:col-span-2 p-4 backdrop-blur-md shadow-lg grid auto-rows-max w-full self-center">
                     <h1 className="text-md font-semibold text-primary-col text-center pb-4">
                         Weather
@@ -132,6 +148,9 @@ const WeatherDisplay = () => {
                             {weatherData?.weather[0].description}
                         </p>
                     </section>
+
+                    
+                    {/* additional weather information */}
                     <section className="flex flex-col lg:flex-row justify-around items-center gap-4 py-4 text-center text-primary-col">
                         <span className="w-[7rem] p-1 lg:p-4 bg-accent-col-transp rounded shadow-md hover:shadow-lg">
                             <h2 className="text-sm p-1">Pressure</h2>

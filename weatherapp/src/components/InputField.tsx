@@ -1,8 +1,11 @@
+// import neccesssary framworks 
 import React from 'react'
 
+// component for input field
 const InputField = (props: { fieldType: string, fieldID: string, fieldName: string, value: string, setterFunction: React.Dispatch<React.SetStateAction<string>> }) => {
     return (
         <span className='relative w-full grid input_box'>
+            {/* input field */}
             <input
                 type={props.fieldType}
                 id={props.fieldID}

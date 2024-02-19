@@ -1,3 +1,4 @@
+// import neccessary libraries/frameworks
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import RegisterPage from './components/RegisterPage';
@@ -10,6 +11,7 @@ function App() {
         <div className="App bg-gradient">
             <div className='min-h-screen p-14'>
 
+                {/* background elements */}
                 <div className='w-screen h-screen fixed top-0 left-0 overflow-hidden pointer-events-none'>
                     <h1 className='absolute top-5 right-0 font-bold text-[15rem] text-fade-col'>Sunny?</h1>
                     <h1 className='absolute -top-5 -left-5 font-bold text-[10rem] text-fade-col'>Winds!</h1>
@@ -17,9 +19,11 @@ function App() {
                     <h1 className='absolute -bottom-80 -left-48 font-bold text-[50rem] text-fade-col'>WEATHER</h1>
                 </div>
 
+                {/* main content */}
                 <div className='relative w-full auto-rows-min rounded bg-card-transp-white backdrop-blur-md shadow-lg'>
                     <BrowserRouter>
                         <Routes>
+                            {/* routing */}
                             <Route path='/' element={<RoutesContainer />}>
                                 <Route index path="/" element={<HomePage />} />
                                 <Route path="register" element={<RegisterPage />} />
@@ -35,4 +39,5 @@ function App() {
     );
 }
 
+// export the app component
 export default App;
