@@ -49,10 +49,3 @@ export interface APIKeyBasePair {
     key: string;
     base: string;
 }
-
-// interface for user data W/O password
-export interface UserDataWithoutPassword {
-    name: string;
-    email: string;
-    city: string;
-}

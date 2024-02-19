@@ -12,23 +12,25 @@ const RegisterPage = () => {
 
     // state variables
 
-    const [isLogin, setLogin] = useState<boolean>(false);
+    const [isRegister, setRegister] = useState<boolean>(false);
 
     const [nameValue, setNameValue] = useState<string>('');
     const [emailValue, setEmailValue] = useState<string>('');
 
     const [regPasswordValue, setRegPasswordValue] = useState<string>('');
-    const [loginPasswordValue, setLoginPasswordValue] = useState<string>('');
+    const [loginPasswordValue, setRegisterPasswordValue] = useState<string>('');
 
     const [cityValue, setCityValue] = useState<string>('');
 
-    // function to toggle between login, register and to clear the input fields
-    const toggleIsLogin = () => { setLogin(!isLogin); }
+    // function to toggle between login, register
+    const toggleisRegister = () => { setRegister(!isRegister); }
+    
+    // function to clear the input field
     const clearInputFields = () => {
         setNameValue('');
         setEmailValue('');
         setRegPasswordValue('');
-        setLoginPasswordValue('');
+        setRegisterPasswordValue('');
         setCityValue('');
     }
 
@@ -37,7 +39,7 @@ const RegisterPage = () => {
 
     return (
         <div className="col-start-1 row-span-full col-span-full flex flex-col items-center justify-center w-full md:w-1/2 py-32 px-6 m-auto gap-5 md:gap-9">
-            {isLogin ?
+            {isRegister ?
                 <>
                     <h1 className="text-5xl leading-[1.25] font-semibold self-center text-center text-primary-col drop-shadow-md">Register</h1>
                     <InputField
@@ -77,11 +79,15 @@ const RegisterPage = () => {
                                 registerButton(nameValue, emailValue, regPasswordValue, cityValue)
                                     .then((res) => {
                                         console.log(res);
-                                        if(res) {
-                                            clearInputFields();
-                                            toggleIsLogin();
+                                        clearInputFields();
+                                        if(res.status === 200) {
+                                            toggleisRegister();
                                             toast.success('Resistered');
-                                        } else {
+                                        } 
+                                        else if(res.status === 201) {
+                                            toast.error('User already exists');
+                                        }
+                                        else {
                                             toast.error('Not registered');
                                         }
                                     })
@@ -90,7 +96,7 @@ const RegisterPage = () => {
                         </button>
                         <p className="text-sm"> or </p>
                         <button className='text-accent-col font-light underline transition hover:scale-110' onClick={() => {
-                            toggleIsLogin();
+                            toggleisRegister();
                             clearInputFields();
                         }}>Login</button>
                     </section>
@@ -110,7 +116,7 @@ const RegisterPage = () => {
                         fieldID={"password"}
                         fieldName={"Password"}
                         value={loginPasswordValue}
-                        setterFunction={setLoginPasswordValue}
+                        setterFunction={setRegisterPasswordValue}
                     />
                     <section className='flex items-center self-end px-4 mt-2 gap-4'>
                         <button
@@ -120,13 +126,20 @@ const RegisterPage = () => {
                                 loginButton(emailValue, loginPasswordValue)
                                     .then((res) => {
                                         console.log(res);
-                                        if(res) {
-                                            clearInputFields();
+                                        clearInputFields();
+                                        if(res.status === 200) {
                                             navigate('/weather', {
-                                                state: res
+                                                state: res.data.user
                                             });
                                             toast.success('Login Successful');
-                                        } else {
+                                        }
+                                        else if(res.status === 201) {
+                                            toast.error('User doesn\'t exist');
+                                        }
+                                        else if(res.status === 202) {
+                                            toast.error('Incorrect Password');
+                                        }
+                                        else {
                                             toast.error('Login Failed');
                                         }
                                     })
@@ -135,7 +148,7 @@ const RegisterPage = () => {
                         </button>
                         <p> or </p>
                         <button className='text-accent-col font-light underline transition hover:scale-110' onClick={() => {
-                            toggleIsLogin();
+                            toggleisRegister();
                             clearInputFields();
                         }}>Register</button>
                     </section>

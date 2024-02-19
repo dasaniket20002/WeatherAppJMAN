@@ -11,7 +11,7 @@ const register = async (req, res) => {
 
     // return error status if the new user email already exists
     const user = await User.findOne({ email: email });
-    if (user) return res.status(400).json({ msg: "User already exists!" });
+    if (user) return res.status(201).json({ msg: "User already exists!" });
 
     // if (!passwordRegex.test(password)) {
     //   return res.status(400).json({ error: "Password does not meet criteria." });
@@ -45,11 +45,11 @@ const login = async (req, res) => {
 
     // no existing user email from the requested email
     const user = await User.findOne({ email: email });
-    if (!user) return res.status(400).json({ msg: "User does not exist. " });
+    if (!user) return res.status(201).json({ msg: "User does not exist. " });
 
     // invalid passwords
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
+    if (!isMatch) return res.status(202).json({ msg: "Invalid credentials. " });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     const userObject = user.toObject();
@@ -59,7 +59,7 @@ const login = async (req, res) => {
     console.log("User logged in successfully");
     res.status(200).json({ token, user: userObject });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
     console.log(err.message);
   }
 };
